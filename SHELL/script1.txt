@@ -1,0 +1,34 @@
+# Se calculeaza dimensiunea totala a fisierelor obisnuite cu sufixul dat din subarborele directoarelor date ca argumente
+# Daca nu exista cel putin 2 argumente, se afiseaza mesaj de utilizare.
+
+sum=0
+if test $# -lt 2
+	then echo "Usage $0 suffix dir1 dir2 ..."
+else
+	suffix=$1
+	shift
+	for i
+	do	
+		for j in $i/*
+		do		
+			if ! test -L $j
+			then 
+				if test -d $j
+				then
+					bash $0 $suffix $j
+					sum=`expr $sum + $?`
+				elif test -f $j
+				then
+					v=`echo $j | grep "$suffix$" | wc -L`
+					if test $v -gt 0
+					then 
+						s=`cat $j | wc -c`
+						sum=`expr $sum + $s`
+					fi
+				fi
+			fi
+		done
+	done
+fi
+echo $sum
+exit $sum

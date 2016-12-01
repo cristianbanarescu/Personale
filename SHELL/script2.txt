@@ -1,0 +1,49 @@
+# Se calculeaza nr total de legaturi simbolice din directoarele date ca argumente (pe primul nivel, nu din subarbore). 
+
+# Daca nu exista minim 2 argumente, se afiseaza mesaj de utilizare.
+
+# De asemenea, pentru fiecare director, daca nr de legaturi simbolice are minim 2 cifre (>=10) si este nr. par
+
+# se va scrie in fisierul <file> (dat de primul argument) numele directorului, urmat de nr. de legaturi simbolice.
+
+sum=0
+
+echo "Folders: " > $1
+
+if test $# -lt 2
+
+	then echo "Usage $0 file dir1 dir2 ..."
+
+else
+
+	for arg
+	
+do
+
+		if test -d $arg
+
+		then
+ 
+			n=`ls -l $arg | grep "^l" | wc -l`;
+
+			sum=`expr $sum + $n`
+
+
+			digits=`echo $n | wc -L`
+
+			r=`expr $n % 2`
+
+			if test $digits -ge 2 && test $r -eq 0
+
+			then echo "$arg : $n" >> $1
+
+			fi
+
+		fi
+
+	done
+
+fi
+
+echo $sum
+cat $1

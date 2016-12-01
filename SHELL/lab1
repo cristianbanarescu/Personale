@@ -1,0 +1,31 @@
+#!/bin/bash
+
+
+if [[ $# -eq 0 ]]
+then
+echo "Dati numele fisierelor ca parametri"
+else
+echo "Calculez..."
+
+sum=0
+nrcar=0
+
+#while [[ arg -le $# ]]
+for file
+do
+  nr=0
+  # file=${!arg}
+  
+  nr=$(<"$file")
+  #echo $nr
+  if [[ nr -gt 0 ]]
+  then
+    sum=$(( sum + nr ))
+    nrcar=$((${#nr} + nrcar))
+  fi
+
+done
+
+echo "Suma: " $sum
+echo "Numar caractere: $nrcar"
+fi
